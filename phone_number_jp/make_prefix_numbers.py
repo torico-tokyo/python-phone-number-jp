@@ -12,6 +12,7 @@ https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%B8%82%E5%A4%96%E5%B
 からもらう。
 """
 from collections import defaultdict
+from itertools import chain
 
 import requests
 from bs4 import BeautifulSoup
@@ -20,6 +21,19 @@ SOURCE_URL = 'https://ja.wikipedia.org/wiki/' \
              '%E6%97%A5%E6%9C%AC%E3%81%AE%E5%B8%82%E5%A4%96%E5%B1%80%E7%95%AA'
 
 OUTPUT_FILE = 'prefix_numbers.py'
+
+special_prefixes = [
+    '020',
+    '050',
+    '060',
+    '070',
+    '080',
+    '090',
+    '0120',
+    '0800',
+    '0990',
+    '0570',
+]
 
 
 class HtmlTableNotFound(Exception):
@@ -58,13 +72,9 @@ def get_number_prefixes():
 def main():
     python_text = '# flake8: NOQA\nphone_number_prefixes = {}\n'
 
-    indexed_numbers = defaultdict(list)
-    for n in get_number_prefixes():
-        index = n[:2]
-        indexed_numbers[index].append(n)
-
-    for k in indexed_numbers:
-        indexed_numbers[k].sort(key=lambda x: len(x) * -1)
+    indexed_numbers = defaultdict(set)
+    for n in chain(get_number_prefixes(), special_prefixes):
+        indexed_numbers[len(n)].add(n)
 
     with open(OUTPUT_FILE, 'w') as fp:
         fp.write(python_text.format(dict(indexed_numbers)))
