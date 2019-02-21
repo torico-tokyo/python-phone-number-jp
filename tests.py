@@ -4,10 +4,12 @@ import unittest
 
 try:
     from .phone_number_jp import split_phone_number, PhoneNumberIsNotDigits, \
-        PrefixNoMatch, InvaliDigits, insert_hyphens, insert_spaces
+        PrefixNoMatch, InvaliDigits, insert_hyphens, insert_spaces, \
+        split_phone_number_no_fail
 except ImportError:
     from phone_number_jp import split_phone_number, PhoneNumberIsNotDigits, \
-        PrefixNoMatch, InvaliDigits, insert_hyphens, insert_spaces
+        PrefixNoMatch, InvaliDigits, insert_hyphens, insert_spaces, \
+        split_phone_number_no_fail
 
 test_numbers = [
     ('08011112222', ('080', '1111', '2222')),
@@ -42,6 +44,9 @@ class PhoneNumberJPTest(unittest.TestCase):
     def test_invalid_digits(self):
         with self.assertRaises(InvaliDigits):
             split_phone_number('091112222')
+
+    def test_no_fail(self):
+        self.assertEqual(split_phone_number_no_fail(''), ('', '', ''))
 
     def test_insert_hyphens(self):
         self.assertEqual(

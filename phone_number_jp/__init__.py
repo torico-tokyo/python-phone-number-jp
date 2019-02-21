@@ -5,7 +5,7 @@ from typing import Tuple
 from .prefix_numbers import phone_number_prefixes
 
 __author__ = 'ytyng'
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 __license__ = 'BSD'
 
 MAX_PREFIX_DIGIT = 5
@@ -54,6 +54,8 @@ def split_phone_number_no_fail(phone_number: str) -> Tuple[str, str, str]:
     """
     無理やり3分割する。無理な時は空文字
     """
+    if not phone_number:
+        return '', '', ''
     try:
         return split_phone_number(phone_number)
     except PrefixNoMatch:
