@@ -10,33 +10,24 @@ except ImportError:
         PrefixNoMatch, InvaliDigits, insert_hyphens, insert_spaces
 
 test_numbers = [
-    ('08011112222', [3, 4, 4]),
-    ('09011112222', [3, 4, 4]),
-    ('05011112222', [3, 4, 4]),
-    ('0311112222', [2, 4, 4]),
-    ('0611112222', [2, 4, 4]),
-    ('0250111222', [4, 3, 3]),
-    ('0251112222', [3, 3, 4]),
-    ('0158611222', [5, 2, 3]),
-    ('0158111222', [4, 3, 3]),
-    ('0746811222', [5, 2, 3]),
+    ('08011112222', ('080', '1111', '2222')),
+    ('09011112222', ('090', '1111', '2222')),
+    ('05011112222', ('050', '1111', '2222')),
+    ('0311112222', ('03', '1111', '2222')),
+    ('0611112222', ('06', '1111', '2222')),
+    ('0250111222', ('0250', '111', '222')),
+    ('0251112222', ('025', '111', '2222')),
+    ('0158611222', ('01586', '11', '222')),
+    ('0158111222', ('0158', '111', '222')),
+    ('0746811222', ('07468', '11', '222')),
 ]
 
 
 class PhoneNumberJPTest(unittest.TestCase):
 
     def test_split(self):
-        for phone_number, digits in test_numbers:
-            s = split_phone_number(phone_number)
-            start = 0
-            for segment, digit in zip(s, digits):
-                # 桁数があっているかテスト
-                self.assertEqual(len(segment), digit)
-
-                # 分割後の数値が正しいかテスト
-                segment2 = phone_number[start:start + digit]
-                self.assertEqual(segment, segment2)
-                start += digit
+        for before, after in test_numbers:
+            self.assertEqual(split_phone_number(before), after)
 
     def test_no_number(self):
         with self.assertRaises(PhoneNumberIsNotDigits):
