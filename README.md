@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/torico-tokyo/python-phone-number-jp.svg?branch=master)](https://travis-ci.org/torico-tokyo/python-phone-number-jp)
+[![Latest PyPI version](https://img.shields.io/pypi/v/python-phone-number-jp.svg)](https://pypi.python.org/pypi/python-phone-number-jp/)
+
 # 日本の電話番号分割
 
 日本の電話番号を簡易的に分割する
