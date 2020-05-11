@@ -47,6 +47,20 @@ class PhoneNumberJPTest(unittest.TestCase):
 
     def test_no_fail(self):
         self.assertEqual(split_phone_number_no_fail(''), ('', '', ''))
+        self.assertEqual(split_phone_number_no_fail(' '), ('', '', ''))
+        self.assertEqual(split_phone_number_no_fail('\n'), ('', '', ''))
+        self.assertEqual(split_phone_number_no_fail('0311112222'),
+                         ('03', '1111', '2222'))
+        self.assertEqual(split_phone_number_no_fail('08011112222'),
+                         ('080', '1111', '2222'))
+        self.assertEqual(split_phone_number_no_fail('03HELLO2222'),
+                         ('', '', ''))
+        self.assertEqual(split_phone_number_no_fail('080=1111=2222'),
+                         ('', '', ''))
+        self.assertEqual(split_phone_number_no_fail('080ー1111ー2222'),
+                         ('', '', ''))
+        self.assertEqual(split_phone_number_no_fail('こんにちは'),
+                         ('', '', ''))
 
     def test_insert_hyphens(self):
         self.assertEqual(

@@ -5,7 +5,7 @@ from typing import Tuple
 from .prefix_numbers import phone_number_prefixes
 
 __author__ = 'ytyng'
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 __license__ = 'BSD'
 
 MAX_PREFIX_DIGIT = 5
@@ -63,6 +63,8 @@ def split_phone_number_no_fail(phone_number: str) -> Tuple[str, str, str]:
     except InvaliDigits:
         if len(phone_number) > 5:
             return _split_tail(phone_number[:3], phone_number[3:])
+    except PhoneNumberIsNotDigits:
+        return '', '', ''
     return _split_tail('', phone_number)
 
 
